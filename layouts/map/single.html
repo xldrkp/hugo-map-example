@@ -1,0 +1,20 @@
+{{ define "main" }}
+<article>
+  <header id="post-header">
+    <h1>{{ .Title }}</h1>
+  </header>
+  <p>The {{ .Site.Params.map.superlative }} places in {{ .Site.Params.map.place }}</p>
+  {{- .Content -}}
+
+  <div id="map"></div>
+  <script>
+    var map = L.map("map").setView([{{ .Site.Params.map.lat }}, {{ .Site.Params.map.lon }}], {{ .Site.Params.map.zoom }});
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  </script>
+  {{ range $.Site.Data.places }} {{ partial "place.html" . }} {{ end }}
+</article>
+{{ end }}

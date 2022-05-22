@@ -1,3 +1,6 @@
 _vendor/
 resources/
 karte/go.sum
+public/
+tree.md
+.hugo_build.lock

@@ -1,0 +1,46 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ with .Site.Params.description -}}
+    <meta name="description" content="{{ . }}">
+    {{ end }}
+    {{ printf `
+    <link rel="shortcut icon" href="%s">` ("favicon.ico" | absURL) | safeHTML }}
+    {{ with .OutputFormats.Get "rss" -}}
+    {{ printf `
+    <link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+    {{ end -}}
+
+    {{ $resources := slice -}}
+
+    {{ $resources = $resources | append (resources.Get "css/main.css") -}}
+
+    {{ $resources = $resources | append (resources.Get "css/min770px.css") -}}
+
+    {{ $resources = $resources | append (resources.Get "css/custom.css") -}}
+
+    {{ $dark := .Site.Params.dark | default "auto" -}}
+    {{ if not (eq $dark "off") -}}
+    {{ $resources = $resources | append (resources.Get "css/dark.css" | resources.ExecuteAsTemplate "dark.css" .) -}}
+    {{ end -}}
+
+    {{ if .Site.Params.highlight -}}
+    {{ $resources = $resources | append (resources.Get "css/syntax.css") -}}
+    {{ end -}}
+
+    {{ $css := $resources | resources.Concat "css/style.css" | minify }}
+    {{ printf `
+    <link rel="stylesheet" href="%s">` $css.RelPermalink | safeHTML }}
+
+    <title>{{ .Title }}</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+
+</head>

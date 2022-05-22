@@ -1,0 +1,10 @@
+<script type="text/javascript">
+  L.marker([
+      {{ .meta.lat }},
+      {{ .meta.lon }}],
+      {
+          "title": {{ .meta.title }}
+        }
+    ).addTo(map)
+      .bindPopup('{{ .meta.popuptext }}')
+</script>

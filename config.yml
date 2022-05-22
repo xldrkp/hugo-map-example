@@ -1,0 +1,40 @@
+baseURL: 'https://example.com'
+title: Website Name
+languageCode: de-DE
+enableInlineShortcodes: true
+pygmentsCodeFences: true
+pygmentsUseClasses: true
+module:
+  imports:
+    - path: github.com/LukasJoswiak/etch
+params:
+  description: Your site description
+  copyright: Copyright © 2021 Your Name
+  dark: auto
+  highlight: true
+  map:
+    superlative: most beautiful
+    place: Hamburg
+    lat: 53.5715
+    lon: 9.9858
+    zoom: 12
+menu:
+  main:
+    - identifier: posts
+      name: posts
+      title: posts
+      url: /
+      weight: 10
+    - identifier: map
+      name: map
+      title: map
+      url: /map/
+      weight: 20
+permalinks:
+  posts: '/:title/'
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    ordered: true
